@@ -1,5 +1,7 @@
+using Blazored.Toast;
 using BlazorServer_ControlDinero.Data;
 using BlazorServer_ControlDinero.Services;
+using CurrieTechnologies.Razor.SweetAlert2;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +12,16 @@ string connectionStringPostgre = builder.Configuration.GetConnectionString("Post
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+
+//*Blazor Bootstrap
+builder.Services.AddBlazorBootstrap();
+
+//*SweetAlert 2
+builder.Services.AddSweetAlert2();
+
+//Toastr
+builder.Services.AddBlazoredToast();
+
 builder.Services.AddScoped<IControlDineroService,ControlDineroService>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(op =>
