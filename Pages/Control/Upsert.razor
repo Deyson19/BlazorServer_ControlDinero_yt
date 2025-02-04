@@ -1,0 +1,156 @@
+﻿@page "/control/upsert"
+@page "/control/upsert/{id}"
+
+@inject IControlDineroService _controlDinero
+@inject IToastService _toast
+@inject NavigationManager _nav
+
+
+<PageTitle>@formTitle</PageTitle>
+
+<div class="container-fluid">
+    <h2 class="text-center text-primary">
+        @formTitle
+    </h2>
+    <div class="text-center">
+        <button class="btn btn-outline-primary" @onclick="@(()=>volver())">
+            Regresar
+        </button>
+    </div>
+
+    <hr />
+
+    <div class="container d-grid gap-2 justify-content-center">
+        <div class="card-header">
+            <h2 class="text-center text-primary">
+                @formTitle
+            </h2>
+        </div>
+        <div class="card-body">
+            <EditForm Model="model" FormName="@formTitle" OnValidSubmit="OnSubmit">
+                <DataAnnotationsValidator />
+                <div class="form-group">
+                    <label for="@nameof(model.Descripcion)" class="text-center text-primary">
+                        @nameof(model.Descripcion)
+                    </label>
+                    <InputText class="form-control" id="@nameof(model.Descripcion)" @bind-Value="model!.Descripcion" />
+                    <ValidationMessage For="@(()=>model.Descripcion)" />
+                </div>
+                <div class="form-group">
+                    <label for="@nameof(model.Valor)" class="text-center text-primary">
+                        @nameof(model.Valor)
+                    </label>
+                    <InputNumber class="form-control" id="@nameof(model.Valor)" @bind-Value="model!.Valor" />
+                    <ValidationMessage For="@(()=>model.Valor)" />
+                </div>
+                <div class="form-group">
+                    <label for="@nameof(model.Valor)" class="text-center text-primary">
+                        @nameof(model.Valor)
+                    </label>
+                    <InputSelect class="form-select" id="@nameof(model.EsIngreso)" @bind-Value="model!.EsIngreso">
+                        <option value="true" class="text-primary">Ingreso</option>
+                        <option value="false" class="text-danger">Gasto</option>
+                    </InputSelect>
+                    <ValidationMessage For="@(()=>model.EsIngreso)" />
+                </div>
+                <div class="form-group">
+                    <label for="@nameof(model.FechaIngreso)" class="text-center text-primary">
+                        @nameof(model.FechaIngreso)
+                    </label>
+                    <InputDate class="form-control" id="@nameof(model.FechaIngreso)" @bind-Value="model!.FechaIngreso" />
+                    <ValidationMessage For="@(()=>model.FechaIngreso)" />
+                </div>
+
+                <button type="submit" class="@formButtonClass mt-3">
+                    @formButtonText
+                </button>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public string? id { get; set; }
+
+    private UpsertControlDinero? model = new();
+
+    public string formTitle = "Crear Registro";
+    public string formButtonText = "Crear";
+    public string formButtonClass = "btn btn-primary";
+
+    bool isEditing = false;
+
+    protected override void OnInitialized()
+    {
+        model ??= new();
+    }
+    private void volver()
+    {
+        _nav.NavigateTo("/control");
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (!string.IsNullOrEmpty(id))
+        {
+            var registro = await _controlDinero.Detalle(int.Parse(id));
+            if (registro ==null)
+            {
+                DisplayToast(false,"NO hay coincidencias");
+                await Task.Delay(500);
+                volver();
+            }else{
+                isEditing = true;
+                formTitle = "Editar Un Registro";
+                model.Descripcion = registro.Descripcion;
+                model.FechaIngreso = registro.FechaIngreso;
+                model.EsIngreso = registro.EsIngreso;
+                model.Valor = registro.Valor;
+                formButtonClass = "btn btn-outline-primary";
+            }
+        }
+    }
+
+    private async Task OnSubmit(){
+        if (isEditing)
+        {
+            var result = await _controlDinero.Actualizar(int.Parse(id), model!);
+            if (result !=null)
+            {
+                DisplayToast(true, "Realizado");
+            }else{
+                DisplayToast(false, "No se pudo realizar");
+            }
+        }else{
+            var result = await _controlDinero.Crear(model!);
+            if (result != null)
+            {
+                DisplayToast(true, "Realizado");
+            }
+            else
+            {
+                DisplayToast(false, "No se pudo realizar");
+            }
+        }
+        await Task.Delay(2500);
+        volver();
+    }
+
+
+    private void DisplayToast(bool isSuccess, string message){
+        if (isSuccess)
+        {
+            _toast.ShowSuccess(message);
+        }else{
+            _toast.ShowError(message);
+        }
+    }
+
+
+
+
+
+
+}
