@@ -26,8 +26,8 @@ builder.Services.AddScoped<IControlDineroService,ControlDineroService>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(op =>
 {
-    //op.UseNpgsql(connectionStringPostgre);
-    op.UseSqlServer(connectionString);
+    op.UseNpgsql(connectionStringPostgre);
+    //op.UseSqlServer(connectionString);
 });
 
 var app = builder.Build();
