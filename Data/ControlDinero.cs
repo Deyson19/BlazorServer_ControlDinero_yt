@@ -22,7 +22,8 @@ namespace BlazorServer_ControlDinero.Data
     public class UpsertControlDinero
     {
         [Required(ErrorMessage = "El campo {0} no es correcto.")]
-        public required string Descripcion { get; set; }
+        [StringLength(60,MinimumLength =5)]
+        public string Descripcion { get; set; } = string.Empty;
         [Required(ErrorMessage = "El campo {0} no es correcto.")]
 
         [Display(Name = "Tipo de Ingreso")]
