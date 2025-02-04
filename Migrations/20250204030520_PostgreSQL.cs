@@ -1,12 +1,13 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace BlazorServer_ControlDinero.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class PostgreSQL : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,12 +16,12 @@ namespace BlazorServer_ControlDinero.Migrations
                 name: "ControlDineros",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EsIngreso = table.Column<bool>(type: "bit", nullable: false),
-                    Valor = table.Column<double>(type: "float", nullable: false),
-                    FechaIngreso = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Descripcion = table.Column<string>(type: "text", nullable: false),
+                    EsIngreso = table.Column<bool>(type: "boolean", nullable: false),
+                    Valor = table.Column<double>(type: "double precision", nullable: false),
+                    FechaIngreso = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
