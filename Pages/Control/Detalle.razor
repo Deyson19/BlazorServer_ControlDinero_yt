@@ -1,0 +1,97 @@
+﻿@page "/control/detalle/{id}"
+
+
+@inject IControlDineroService _controlDinero
+@inject NavigationManager _nav
+@inject IToastService _toast
+
+<PageTitle>Detalle</PageTitle>
+<div class="container-fluid">
+    <h2 class="text-center text-primary">
+        Información del Registro
+    </h2>
+    <div class="card">
+        <div class="card-header">
+            <h3 class="text-center">Detalles</h3>
+        </div>
+        <div class="card-body">
+            @if (controlDinero != null)
+            {
+                <div class="row">
+                    <div class="col">
+                        <strong>Descripción</strong>
+                        <p class="card-text">@controlDinero.Descripcion</p>
+                        <p class="text-secondary">Tipo de Registro</p>
+                        <p class="card-text">
+                            @if (controlDinero.EsIngreso)
+                            {
+                                <span class="text-success">Ingreso</span>
+                            }
+                            else
+                            {
+                                <span class="text-white bg-danger">Gasto/Egreso</span>
+
+                            }
+                        </p>
+                    </div>
+                    <div class="col">
+                        <h3 class="text-success">
+                            Valor
+                        </h3>
+                        <p class="card-text">
+                            @controlDinero.Valor
+                        </p>
+                        <h3 class="text-secondary">
+                            Fecha del Registro
+                        </h3>
+                        <p class="card-text">
+                            @controlDinero.FechaIngreso
+                        </p>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <p class="text-center text-danger">No hay información para mostrar</p>
+            }
+        </div>
+        <div class="card-footer d-flex justify-content-center">
+            <button class="btn btn-primary" @onclick="(()=>volver())">
+                <i class="fa-solid fa-circle-left"></i>
+                Volver
+            </button>
+        </div>
+    </div>
+</div>
+@code {
+    [Parameter]
+    public string? id { get; set; }
+
+    private ControlDinero? controlDinero { get; set; }
+
+    //*Leer query - paramtros de la url*/
+    protected override async Task OnParametersSetAsync()
+    {
+        if (id ==null)
+        {
+            _toast.ShowError("No hay un id correcto");
+            await Task.Delay(500);
+            volver();
+        }else{
+            var buscar = await _controlDinero.Detalle(int.Parse(id));
+            if (buscar != null)
+            {
+                controlDinero = buscar;
+                _toast.ShowSuccess("Registro encontrado correctamente");
+            }else{
+                _toast.ShowError("No hay un id correcto");
+                await Task.Delay(500);
+                volver();
+            }
+        }
+    }
+
+    void volver(){
+        _nav.NavigateTo("/control");
+    }
+}
