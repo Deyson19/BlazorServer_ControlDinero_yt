@@ -32,7 +32,7 @@ namespace BlazorServer_ControlDinero.Data
         [Required(ErrorMessage = "El campo {0} no es correcto.")]
         public double Valor { get; set; }
         [Display(Name = "Fecha de Ingreso")]
-        public DateTime FechaIngreso { get; set; }
+        public DateTime FechaIngreso { get; set; } = DateTime.Now;
     }
 
 }
