@@ -1,7 +1,7 @@
-# BlazorServer_ControlDinero
+# Blazor Server - App Control Dinero
 
 App en Blazor Server para gestión de gastos
-Base de datos: SQL Server + Migraciones. 
+Base de datos: PostgreSQL + Migraciones. 
 
 
 ## Instalaciones 
@@ -14,7 +14,7 @@ git push
 ```
 dotnet restore
 ```
-3. Ajustar cadena de conexión para SQL Server en el archivo "appsettings.json".
+3. Ajustar cadena de conexión para PostgreSQL en el archivo "appsettings.json".
 4. Ejecutar las migraciones para montar la base de datos correctamente. 
 - Usando Visual Studio, abrir consola de administrador de paquetes y escribir.
 ```
