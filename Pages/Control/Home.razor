@@ -1,0 +1,103 @@
+﻿@page "/control"
+
+@inject IControlDineroService _controlDinero
+@inject IToastService _toast
+@inject NavigationManager _nav
+
+
+<PageTitle>Control - Dinero</PageTitle>
+
+<div class="container">
+    <div class="card border-2">
+        <div class="card-header">
+            <h3 class="text-primary text-center">
+                Listado de Registros
+            </h3>
+            <h4 class="text-center text-success">
+                Total: @listadoPadre.Count()
+            </h4>
+        </div>
+        <div class="card-body d-flex justify-content-center">
+            <a href="/control/upsert" class="btn btn-dark">
+                Agregar
+                <i class="fa fa-plus"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row col-4">
+                <label class="col-form-label text-dark">
+                    Total ingresos:
+                </label>
+                <div class="text-right text-primary">
+                    <label class="col-form-label">
+                        @totalIngresos.ToString("C")
+                    </label>
+                </div>
+            </div>
+            <div class="row col-4">
+                <label class="col-form-label text-dark">
+                    Total Gastos:
+                </label>
+                <div class="text-right text-danger">
+                    <label class="col-form-label">
+                        @totalGastos.ToString("C")
+                    </label>
+                </div>
+            </div>
+            <label class="col-form-label text-dark">
+                Total Saldo:
+            </label>
+            <div class="text-right text-success">
+                <label class="col-form-label">
+                    @totalSaldo.ToString("C")
+                </label>
+            </div>
+        </div>
+    </div>
+
+    @if (!isLoading)
+    {
+        <ListadoComponent listado="@listadoPadre" wasRemoved="OnRemove" />
+    }
+    else
+    {
+        <_Spinner mensaje="@message" />
+    }
+
+</div>
+
+@code {
+    public double totalIngresos = 0;
+    public double totalGastos = 0;
+    public double totalSaldo = 0;
+
+    public string message = "Cargando registros...";
+    bool isLoading = true;
+
+    public List<ControlDinero> listadoPadre { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var registros = await _controlDinero.Listado();
+        await Task.Delay(3000);
+        isLoading = false;
+        listadoPadre = registros.ToList();
+
+        //*Analisis de los datos para las estadisticas*/
+        totalIngresos = registros.Where(p => p.EsIngreso).Select(x => x.Valor).DefaultIfEmpty(0.0).Sum();
+        totalGastos = registros.Where(p => !p.EsIngreso).Select(x => x.Valor).DefaultIfEmpty(0.0).Sum();
+
+        totalSaldo = totalIngresos - totalGastos;
+    }
+
+    //*Escuchar evento eliminar del hijo "wasRemoved"*/
+    async Task OnRemove(bool result){
+        if (result)
+        {
+            await OnInitializedAsync();
+        }
+    }
+}
