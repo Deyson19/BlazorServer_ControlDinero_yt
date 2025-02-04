@@ -1,0 +1,17 @@
+﻿insert into ControlDineros (Descripcion, EsIngreso, Valor, FechaIngreso) values ('Bread - Raisin Walnut Pull', 1, '49.46', '2024-11-27 14:12:15');
+insert into ControlDineros (Descripcion, EsIngreso, Valor, FechaIngreso) values ('Danishes - Mini Raspberry', 1, '21.44', '2024-11-28 03:24:35');
+insert into ControlDineros (Descripcion, EsIngreso, Valor, FechaIngreso) values ('Quail - Jumbo Boneless', 1, '46.56', '2024-11-17 02:48:49');
+insert into ControlDineros (Descripcion, EsIngreso, Valor, FechaIngreso) values ('Juice - Orange, 341 Ml', 1, '42.52', '2024-12-16 15:53:55');
+insert into ControlDineros (Descripcion, EsIngreso, Valor, FechaIngreso) values ('Puree - Blackcurrant', 0, '38.38', '2024-11-25 19:38:29');
+insert into ControlDineros (Descripcion, EsIngreso, Valor, FechaIngreso) values ('Spinach - Spinach Leaf', 0, '20.15', '2024-12-17 15:31:25');
+insert into ControlDineros (Descripcion, EsIngreso, Valor, FechaIngreso) values ('Pork - Back Ribs', 1, '40.29', '2024-11-18 10:01:19');
+insert into ControlDineros (Descripcion, EsIngreso, Valor, FechaIngreso) values ('Cheese - Parmesan Grated', 0, '43.96', '2024-11-30 05:56:58');
+insert into ControlDineros (Descripcion, EsIngreso, Valor, FechaIngreso) values ('Ice Cream - Super Sandwich', 0, '30.83', '2024-11-15 12:47:43');
+insert into ControlDineros (Descripcion, EsIngreso, Valor, FechaIngreso) values ('Water - Perrier', 1, '41.83', '2024-12-16 08:58:55');
+insert into ControlDineros (Descripcion, EsIngreso, Valor, FechaIngreso) values ('Wine - Champagne Brut Veuve', 1, '35.56', '2024-11-22 23:15:46');
+insert into ControlDineros (Descripcion, EsIngreso, Valor, FechaIngreso) values ('Lettuce - Lolla Rosa', 0, '28.11', '2024-11-15 06:46:37');
+insert into ControlDineros (Descripcion, EsIngreso, Valor, FechaIngreso) values ('Cheese - Feta', 0, '12.30', '2024-12-02 12:35:31');
+insert into ControlDineros (Descripcion, EsIngreso, Valor, FechaIngreso) values ('Beans - Fine', 1, '31.35', '2024-12-04 12:49:36');
+insert into ControlDineros (Descripcion, EsIngreso, Valor, FechaIngreso) values ('Strawberries - California', 1, '27.76', '2024-12-02 19:16:06');
+insert into ControlDineros (Descripcion, EsIngreso, Valor, FechaIngreso) values ('Wine - Vineland Estate Semi - Dry', 0, '20.03', '2024-11-29 12:38:58');
+insert into ControlDineros (Descripcion, EsIngreso, Valor, FechaIngreso) values ('Island Oasis - Banana Daiquiri', 1, '44.26', '2024-12-11 15:33:22');
