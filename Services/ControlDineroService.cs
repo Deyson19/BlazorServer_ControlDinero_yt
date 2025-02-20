@@ -69,7 +69,7 @@ namespace BlazorServer_ControlDinero.Services
         public async Task<IEnumerable<ControlDinero>> Listado(DateTime fechaInial, DateTime fechaFinal)
         {
             var listado = await _dbContext.ControlDineros.Where(
-                x => x.FechaIngreso > fechaInial || x.FechaIngreso < fechaFinal
+                x => x.FechaIngreso > fechaInial && x.FechaIngreso < fechaFinal
                 ).ToListAsync();
             return listado;
         }
