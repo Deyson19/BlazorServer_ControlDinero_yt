@@ -1,4 +1,9 @@
-﻿@inject IControlDineroService _controlDinero
+﻿@using BlazorServer_ControlDinero.Data
+@using BlazorServer_ControlDinero.Services
+@using Blazored.Toast.Services
+@using CurrieTechnologies.Razor.SweetAlert2
+
+@inject IControlDineroService _controlDinero
 @inject NavigationManager _nav
 @inject IToastService _toast
 @inject SweetAlertService _swal
